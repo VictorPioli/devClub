@@ -1,0 +1,74 @@
+:root {
+  /* ---------------------------------------------------------------
+     COLOR — deep graphite-blue void, not true black.
+     Duotone signal system tied to the narrative:
+     signal (cyan)   = learning / data / potential
+     ignition (amber) = building / shipping / energy
+     Both are used sparingly, as punctuation, never as fills.
+  ----------------------------------------------------------------*/
+  --void: #0a0c10;
+  --void-raised: #0e1116;
+  --surface: #12151b;
+  --surface-hi: #1a1e26;
+
+  --line: rgba(243, 245, 247, 0.09);
+  --line-strong: rgba(243, 245, 247, 0.16);
+
+  --ink: #f3f5f7;
+  --ink-dim: #a2a8b2;
+  --ink-faint: #5b626d;
+
+  --signal: #5eead4;
+  --signal-dim: rgba(94, 234, 212, 0.35);
+  --ignition: #ff8a5c;
+  --ignition-dim: rgba(255, 138, 92, 0.35);
+
+  /* ---------------------------------------------------------------
+     TYPE
+     display : Bricolage Grotesque — expressive, geometric, big
+     body    : Geist Sans — quiet, precise
+     mono    : JetBrains Mono — technical annotation, real IDE font
+  ----------------------------------------------------------------*/
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", sans-serif;
+  --font-body: "Geist", -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --size-hero: clamp(3.4rem, 9.6vw, 10.5rem);
+  --size-xl: clamp(2.2rem, 5vw, 4.5rem);
+  --size-lg: clamp(1.4rem, 2.4vw, 2rem);
+  --size-md: 1.125rem;
+  --size-body: 1rem;
+  --size-sm: 0.875rem;
+  --size-xs: 0.75rem;
+
+  --tracking-tight: -0.03em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.14em;
+  --tracking-wider: 0.22em;
+
+  /* ---------------------------------------------------------------
+     SPACE / GRID
+  ----------------------------------------------------------------*/
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --container-max: 1680px;
+
+  /* ---------------------------------------------------------------
+     MOTION
+  ----------------------------------------------------------------*/
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.25, 1, 0.5, 1);
+  --dur-fast: 0.35s;
+  --dur-med: 0.8s;
+  --dur-slow: 1.6s;
+
+  --z-cursor: 100;
+  --z-nav: 60;
+  --z-overlay: 40;
+  --z-scene: 1;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --gutter: 1.25rem;
+  }
+}

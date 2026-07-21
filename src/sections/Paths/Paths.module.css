@@ -1,0 +1,209 @@
+.paths {
+  position: relative;
+  background: var(--void);
+  border-top: 1px solid var(--line);
+  padding: clamp(5rem, 10vh, 7.5rem) 0;
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.heading {
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto clamp(3rem, 6vh, 4.5rem);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.subtitle {
+  margin-top: 1.1rem;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+.row {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(0.6rem, 1.2vw, 1rem);
+  height: clamp(440px, 58vh, 580px);
+  /* Room for the active card to pop forward without clipping into its
+     neighbors' hit areas. */
+  padding: 0.75rem 0.25rem;
+}
+
+.card {
+  position: relative;
+  flex: 1 1 0%;
+  min-width: 0;
+  text-align: left;
+  background: var(--void-raised);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  padding: 0;
+  cursor: pointer;
+  transform: scale(1);
+  transition:
+    transform 0.5s var(--ease-premium),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    filter 0.4s ease;
+}
+
+/* The entrance animation targets this inner wrapper only, keeping the
+   outer card free for the hover transform above. */
+.cardInner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card.active {
+  z-index: 2;
+  transform: scale(1.08);
+  border-color: var(--card-accent, rgba(155, 44, 255, 0.6));
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.65), 0 0 40px -8px var(--card-accent, rgba(155, 44, 255, 0.4));
+}
+
+.card.dimmed {
+  transform: scale(0.96);
+  filter: brightness(0.7) saturate(0.85);
+}
+
+.accentPurple {
+  --card-accent: rgba(155, 44, 255, 0.55);
+}
+
+.accentGreen {
+  --card-accent: rgba(39, 245, 47, 0.45);
+}
+
+.accentMixed {
+  --card-accent: rgba(94, 234, 212, 0.4);
+}
+
+.visual {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 1.5rem 1rem 0;
+  color: var(--ink-dim);
+  transition: color 0.4s ease;
+}
+
+.card.active .visual {
+  color: var(--ink);
+}
+
+.visualSvg {
+  width: 100%;
+  max-width: 64px;
+  height: auto;
+  overflow: visible;
+}
+
+.body {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 1.5rem 1.5rem clamp(1.5rem, 3vh, 2rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 1.9vw, 1.7rem);
+  line-height: 1.08;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.infoPanel {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.55s var(--ease-premium), opacity 0.35s ease;
+}
+
+.card.active .infoPanel {
+  max-height: 220px;
+  opacity: 1;
+}
+
+.description {
+  display: block;
+  margin-top: 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink-dim);
+  max-width: 32rem;
+  white-space: normal;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.tag {
+  font-size: 0.65rem;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-dim);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .row {
+    height: clamp(380px, 62vh, 480px);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .card,
+  .card.active,
+  .card.dimmed {
+    flex: 0 0 78%;
+    scroll-snap-align: center;
+    transform: scale(1);
+    filter: none;
+  }
+
+  .cardTitle {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 560px) {
+  .card,
+  .card.active,
+  .card.dimmed {
+    flex-basis: 86%;
+  }
+}
