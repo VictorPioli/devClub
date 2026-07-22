@@ -5,25 +5,6 @@
   z-index: var(--z-overlay);
 }
 
-.columns {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 var(--gutter);
-}
-
-.column {
-  width: 1px;
-  height: 100%;
-  background: var(--line);
-}
-
-.column:first-child,
-.column:last-child {
-  background: transparent;
-}
-
 .corner {
   position: absolute;
   font-size: 0.65rem;
@@ -31,18 +12,7 @@
   letter-spacing: var(--tracking-wide);
 }
 
-.tl {
-  top: var(--gutter);
-  left: var(--gutter);
-}
-
 .br {
   bottom: var(--gutter);
   right: var(--gutter);
-}
-
-@media (max-width: 720px) {
-  .columns span:not(:first-child):not(:last-child) {
-    display: none;
-  }
 }

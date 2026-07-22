@@ -1,7 +1,6 @@
 .paths {
   position: relative;
   background: var(--void);
-  border-top: 1px solid var(--line);
   padding: clamp(5rem, 10vh, 7.5rem) 0;
 }
 
@@ -107,8 +106,19 @@
   transition: color 0.4s ease;
 }
 
-.card.active .visual {
+.card.active .visual,
+.card.selected .visual {
   color: var(--ink);
+}
+
+.card.selected {
+  border-color: var(--card-accent, rgba(155, 44, 255, 0.6));
+  box-shadow: 0 0 24px -6px var(--card-accent, rgba(155, 44, 255, 0.4));
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--card-accent, var(--signal));
+  outline-offset: 3px;
 }
 
 .visualSvg {
@@ -145,7 +155,8 @@
   transition: max-height 0.55s var(--ease-premium), opacity 0.35s ease;
 }
 
-.card.active .infoPanel {
+.card.active .infoPanel,
+.card.selected .infoPanel {
   max-height: 220px;
   opacity: 1;
 }
@@ -177,6 +188,162 @@
   white-space: nowrap;
 }
 
+/* ---- Track panel (revealed on card selection) ---- */
+
+.trackPanel {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-top: 0;
+  transition:
+    max-height 0.6s var(--ease-premium),
+    opacity 0.4s ease,
+    margin-top 0.4s ease;
+}
+
+.trackOpen {
+  max-height: 2400px;
+  opacity: 1;
+  margin-top: clamp(2rem, 4vh, 3rem);
+}
+
+.trackContent {
+  position: relative;
+  padding: clamp(2rem, 4vh, 3rem) clamp(1.25rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--card-accent, var(--line-strong));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 60%);
+}
+
+.trackHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: clamp(2rem, 4vh, 2.75rem);
+  text-align: center;
+}
+
+.trackEyebrow {
+  font-size: var(--size-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.trackTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.trackModules {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 42rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.moduleItem {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 1.25rem;
+  padding-bottom: clamp(1.5rem, 3vh, 2.25rem);
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.trackOpen .moduleItem {
+  animation: moduleReveal 0.55s var(--ease-premium) forwards;
+  animation-delay: calc(0.18s + var(--module-i, 0) * 0.08s);
+}
+
+@keyframes moduleReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.moduleMarker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.4rem;
+}
+
+.moduleDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--card-accent, var(--signal));
+  box-shadow: 0 0 12px -2px var(--card-accent, var(--signal));
+  flex-shrink: 0;
+}
+
+.moduleConnector {
+  flex: 1;
+  width: 1px;
+  margin-top: 0.5rem;
+  background: linear-gradient(180deg, var(--card-accent, var(--line-strong)), transparent);
+  min-height: 2rem;
+}
+
+.moduleBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.1rem;
+}
+
+.moduleNumber {
+  font-size: var(--size-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--card-accent, var(--ink-dim));
+  filter: brightness(1.4);
+}
+
+.moduleTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.moduleDescription {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-dim);
+}
+
+.moduleTech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.trackFinalLine {
+  margin: clamp(1.5rem, 3vh, 2.25rem) auto 0;
+  max-width: 40rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.4;
+  color: var(--ink);
+  padding-top: clamp(1.5rem, 3vh, 2rem);
+  border-top: 1px solid var(--line);
+}
+
 @media (max-width: 900px) {
   .row {
     height: clamp(380px, 62vh, 480px);
@@ -188,22 +355,38 @@
 
   .card,
   .card.active,
-  .card.dimmed {
+  .card.dimmed,
+  .card.selected {
     flex: 0 0 78%;
     scroll-snap-align: center;
     transform: scale(1);
     filter: none;
   }
 
+  .card.selected {
+    border-color: var(--card-accent, rgba(155, 44, 255, 0.6));
+    box-shadow: 0 0 20px -6px var(--card-accent, rgba(155, 44, 255, 0.4));
+  }
+
   .cardTitle {
     white-space: normal;
+  }
+
+  .trackContent {
+    padding: clamp(1.5rem, 3vh, 2rem) 0.25rem;
+  }
+
+  .moduleItem {
+    grid-template-columns: 24px 1fr;
+    gap: 1rem;
   }
 }
 
 @media (max-width: 560px) {
   .card,
   .card.active,
-  .card.dimmed {
+  .card.dimmed,
+  .card.selected {
     flex-basis: 86%;
   }
 }

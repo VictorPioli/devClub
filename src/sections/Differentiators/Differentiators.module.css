@@ -1,0 +1,422 @@
+.differentiators {
+  position: relative;
+  background: var(--void);
+  padding: clamp(5rem, 10vh, 8rem) 0;
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---- Header ---- */
+
+.header {
+  max-width: 46rem;
+  margin: 0 auto clamp(3rem, 6vh, 4rem);
+  text-align: center;
+}
+
+.title {
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.titleAccent {
+  color: var(--signal);
+}
+
+.intro {
+  margin-top: 1.4rem;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.65;
+  color: var(--ink-dim);
+}
+
+/* ---- Stats ---- */
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  flex-wrap: wrap;
+  max-width: 50rem;
+  margin: 0 auto clamp(4rem, 7vh, 5.5rem);
+  padding: clamp(1.5rem, 3vh, 2rem) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.stat {
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  line-height: 1;
+  color: var(--ink);
+}
+
+.statLabel {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: var(--size-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-dim);
+  max-width: 14rem;
+}
+
+/* ---- Ecosystem (7 pillars) ---- */
+
+.ecosystem {
+  max-width: 84rem;
+  margin: 0 auto;
+}
+
+.ecosystemIntro {
+  text-align: center;
+  max-width: 46rem;
+  margin: 0 auto clamp(2.5rem, 5vh, 3.5rem);
+}
+
+.ecosystemEyebrow {
+  display: inline-block;
+  font-size: var(--size-xs);
+  letter-spacing: var(--tracking-wider);
+  color: var(--signal);
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--signal-dim);
+  border-radius: 999px;
+}
+
+.ecosystemTitle {
+  margin-top: 1.2rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
+}
+
+.ecosystemTitleAccent {
+  color: var(--signal);
+}
+
+.ecosystemLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: stretch;
+}
+
+/* ---- Pillar list (left column) ---- */
+
+.pillarList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.accentPurple { --pillar-accent: #9b2cff; }
+.accentGreen  { --pillar-accent: #55ff36; }
+.accentCyan   { --pillar-accent: var(--signal); }
+.accentAmber  { --pillar-accent: var(--ignition); }
+
+.pillarButton {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--void-raised);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  color: var(--ink-dim);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.35s ease,
+    color 0.35s ease,
+    background 0.35s ease,
+    transform 0.35s var(--ease-premium),
+    box-shadow 0.35s ease;
+}
+
+.pillarButton:hover,
+.pillarActive {
+  color: var(--ink);
+  border-color: var(--pillar-accent, var(--signal));
+  background: color-mix(in srgb, var(--pillar-accent, var(--signal)) 6%, var(--void-raised));
+  box-shadow: 0 0 24px -10px var(--pillar-accent, var(--signal));
+}
+
+.pillarActive {
+  transform: translateX(4px);
+}
+
+.pillarIndex {
+  font-size: var(--size-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--pillar-accent, var(--signal));
+  opacity: 0.85;
+  min-width: 1.6rem;
+}
+
+.pillarIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--pillar-accent, var(--signal)) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--pillar-accent, var(--signal)) 40%, transparent);
+  color: var(--pillar-accent, var(--signal));
+  flex-shrink: 0;
+}
+
+.pillarIconSvg {
+  width: 18px;
+  height: 18px;
+}
+
+.pillarLabel {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+}
+
+.pillarDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pillar-accent, var(--signal));
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  box-shadow: 0 0 10px var(--pillar-accent, var(--signal));
+}
+
+.pillarActive .pillarDot {
+  opacity: 1;
+}
+
+/* ---- Pillar detail panel (right column) ---- */
+
+.pillarPanel {
+  position: relative;
+  background: var(--void-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  padding: clamp(1.75rem, 3.5vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-height: 100%;
+  opacity: 1;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  overflow: hidden;
+}
+
+.pillarPanel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    var(--pillar-accent, var(--signal)) 0%,
+    transparent 45%,
+    transparent 55%,
+    var(--pillar-accent, var(--signal)) 100%
+  );
+  opacity: 0.35;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.pillarPanelHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pillarPanelIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--pillar-accent, var(--signal)) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--pillar-accent, var(--signal)) 50%, transparent);
+  color: var(--pillar-accent, var(--signal));
+  flex-shrink: 0;
+  box-shadow: 0 0 20px -6px var(--pillar-accent, var(--signal));
+}
+
+.pillarPanelIconSvg {
+  width: 26px;
+  height: 26px;
+}
+
+.pillarPanelEyebrow {
+  display: block;
+  font-size: var(--size-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--pillar-accent, var(--signal));
+}
+
+.pillarPanelTitle {
+  margin-top: 0.3rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.pillarPanelText {
+  font-size: clamp(0.95rem, 1.3vw, 1.02rem);
+  line-height: 1.65;
+  color: var(--ink-dim);
+}
+
+.pillarHighlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pillarHighlight {
+  font-size: 0.65rem;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-dim);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  white-space: nowrap;
+}
+
+.pillarFeatured {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid color-mix(in srgb, var(--pillar-accent, var(--signal)) 30%, var(--line));
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  line-height: 1.35;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tight);
+}
+
+/* ---- Bottom flow strip ---- */
+
+.ecosystemFlow {
+  margin-top: clamp(2.5rem, 5vh, 3.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.55rem 0.9rem;
+  padding: 1.25rem 1rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.ecosystemFlowItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.ecosystemFlowLabel {
+  font-size: var(--size-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-dim);
+}
+
+.ecosystemFlowArrow {
+  color: var(--signal);
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 900px) {
+  .ecosystemLayout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .pillarList {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pillarButton {
+    grid-template-columns: auto auto 1fr;
+    flex: 0 0 auto;
+    min-width: 200px;
+    scroll-snap-align: start;
+  }
+
+  .pillarActive {
+    transform: none;
+  }
+
+  .pillarDot {
+    display: none;
+  }
+
+  .stats {
+    gap: 2rem;
+  }
+
+  .ecosystemFlow {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ecosystemFlowItem {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .pillarPanelHeader {
+    gap: 0.8rem;
+  }
+
+  .pillarPanelIcon {
+    width: 46px;
+    height: 46px;
+  }
+}

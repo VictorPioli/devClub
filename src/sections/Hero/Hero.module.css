@@ -2,7 +2,7 @@
   position: relative;
   min-height: 100svh;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   overflow: hidden;
   background: radial-gradient(
     120% 90% at 72% 18%,
@@ -43,12 +43,7 @@
   width: 100%;
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 var(--gutter) 6.5rem;
-  padding-top: clamp(6rem, 16vh, 11rem);
-}
-
-.eyebrowRow {
-  margin-bottom: 1.6rem;
+  padding: clamp(7rem, 14vh, 9rem) var(--gutter) 6.5rem;
 }
 
 .headline {
@@ -77,48 +72,15 @@
 
 .subline {
   margin-top: 2.2rem;
-  max-width: 34ch;
+  max-width: 52ch;
   font-size: var(--size-md);
   color: var(--ink-dim);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-.meta {
-  margin-top: 3.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  padding-top: 1.6rem;
-  border-top: 1px solid var(--line);
-  max-width: 46rem;
-}
-
-.pipeline {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: var(--size-xs);
-  color: var(--ink-faint);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.pipeline li:not(:last-child)::after {
-  content: "→";
-  margin-left: 0.6rem;
-  color: var(--ink-faint);
-}
-
-.pipelineActive {
-  color: var(--signal);
-}
-
-.pageIndex {
-  font-size: var(--size-xs);
-  color: var(--ink-faint);
+.subline strong {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 .scrollCue {
@@ -174,10 +136,6 @@
 
   .headline {
     max-width: 11ch;
-  }
-
-  .meta {
-    margin-top: 2.4rem;
   }
 
   .scrollCue {

@@ -6,9 +6,7 @@ gsap.registerPlugin(ScrollTrigger);
 interface HeroAnimationRefs {
   root: HTMLElement;
   lines: HTMLElement[];
-  eyebrow: HTMLElement | null;
   subline: HTMLElement | null;
-  meta: HTMLElement | null;
   scrollCue: HTMLElement | null;
   canvasWrapper: HTMLElement | null;
 }
@@ -21,7 +19,7 @@ interface HeroAnimationRefs {
 export function runHeroAnimations(refs: HeroAnimationRefs, reduced: boolean) {
   const ctx = gsap.context(() => {
     if (reduced) {
-      gsap.set([refs.eyebrow, refs.subline, refs.meta, refs.scrollCue], {
+      gsap.set([refs.subline, refs.scrollCue], {
         opacity: 1,
         y: 0,
       });
@@ -32,34 +30,22 @@ export function runHeroAnimations(refs: HeroAnimationRefs, reduced: boolean) {
     const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
     tl.fromTo(
-      refs.eyebrow,
-      { opacity: 0, y: 12 },
-      { opacity: 1, y: 0, duration: 0.7 },
+      refs.lines,
+      { yPercent: 110, rotate: 1.5 },
+      { yPercent: 0, rotate: 0, duration: 1.2, stagger: 0.09 },
       0.15
     )
-      .fromTo(
-        refs.lines,
-        { yPercent: 110, rotate: 1.5 },
-        { yPercent: 0, rotate: 0, duration: 1.2, stagger: 0.09 },
-        0.3
-      )
       .fromTo(
         refs.subline,
         { opacity: 0, y: 16 },
         { opacity: 1, y: 0, duration: 0.8 },
-        0.9
-      )
-      .fromTo(
-        refs.meta,
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.7 },
-        1.05
+        0.75
       )
       .fromTo(
         refs.scrollCue,
         { opacity: 0 },
         { opacity: 1, duration: 0.6 },
-        1.3
+        1.15
       );
 
     // Scroll-driven exit: the hero recedes as the next stage approaches —
@@ -71,7 +57,7 @@ export function runHeroAnimations(refs: HeroAnimationRefs, reduced: boolean) {
       scrub: 0.6,
       onUpdate: (self) => {
         const progress = self.progress;
-        gsap.set([refs.eyebrow, refs.lines, refs.subline, refs.meta], {
+        gsap.set([refs.lines, refs.subline], {
           opacity: 1 - progress * 1.4,
           y: -progress * 60,
         });

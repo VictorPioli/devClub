@@ -22,12 +22,6 @@
   color: var(--signal);
 }
 
-.status {
-  display: none;
-  font-size: 0.7rem;
-  color: var(--ink-faint);
-}
-
 .cta {
   font-family: var(--font-mono);
   font-size: var(--size-xs);
@@ -45,8 +39,3 @@
   background: rgba(94, 234, 212, 0.08);
 }
 
-@media (min-width: 900px) {
-  .status {
-    display: inline-flex;
-  }
-}

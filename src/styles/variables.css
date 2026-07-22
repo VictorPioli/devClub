@@ -1,15 +1,15 @@
 :root {
   /* ---------------------------------------------------------------
-     COLOR — deep graphite-blue void, not true black.
+     COLOR — near-absolute black, cinematic and immersive.
      Duotone signal system tied to the narrative:
      signal (cyan)   = learning / data / potential
      ignition (amber) = building / shipping / energy
      Both are used sparingly, as punctuation, never as fills.
   ----------------------------------------------------------------*/
-  --void: #0a0c10;
-  --void-raised: #0e1116;
-  --surface: #12151b;
-  --surface-hi: #1a1e26;
+  --void: #000000;
+  --void-raised: #0a0a0a;
+  --surface: #131313;
+  --surface-hi: #1e1e1e;
 
   --line: rgba(243, 245, 247, 0.09);
   --line-strong: rgba(243, 245, 247, 0.16);

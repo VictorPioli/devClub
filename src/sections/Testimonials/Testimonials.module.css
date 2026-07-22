@@ -1,7 +1,6 @@
 .testimonials {
   position: relative;
   background: var(--void);
-  border-top: 1px solid var(--line);
   padding: clamp(5rem, 10vh, 7.5rem) 0;
 }
 

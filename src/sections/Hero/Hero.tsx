@@ -1,21 +1,18 @@
 import { useLayoutEffect, useRef } from "react";
 import { Experience } from "../../components/scene/Experience";
 import { LogoAssembly } from "../../components/brand/LogoAssembly";
-import { Eyebrow } from "../../components/ui/Eyebrow";
 import { useMousePosition } from "../../hooks/useMousePosition";
 import { useDeviceTier } from "../../hooks/useDeviceTier";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { runHeroAnimations } from "../../animations/heroAnimations";
 import styles from "./Hero.module.css";
 
-const HEADLINE_LINES = ["YOU DON'T LEARN", "TO CODE.", "YOU LEARN", "TO BUILD."];
+const HEADLINE_LINES = ["BEM-VINDO", "AO DEVCLUB."];
 
 export function Hero() {
   const rootRef = useRef<HTMLElement>(null);
   const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const eyebrowRef = useRef<HTMLDivElement>(null);
   const sublineRef = useRef<HTMLParagraphElement>(null);
-  const metaRef = useRef<HTMLDivElement>(null);
   const scrollCueRef = useRef<HTMLDivElement>(null);
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -31,9 +28,7 @@ export function Hero() {
       {
         root: rootRef.current,
         lines,
-        eyebrow: eyebrowRef.current,
         subline: sublineRef.current,
-        meta: metaRef.current,
         scrollCue: scrollCueRef.current,
         canvasWrapper: canvasWrapperRef.current,
       },
@@ -54,18 +49,14 @@ export function Hero() {
       </div>
 
       <div className={styles.content}>
-        <div ref={eyebrowRef} className={styles.eyebrowRow}>
-          <Eyebrow index="00 / 04" label="THE JOURNEY BEGINS" />
-        </div>
-
-        <h1 className={styles.headline} aria-label="You don't learn to code. You learn to build.">
+        <h1 className={styles.headline} aria-label="Bem-vindo ao DevClub.">
           {HEADLINE_LINES.map((line, i) => (
             <span className={styles.lineMask} key={line}>
               <span
                 ref={(el) => {
                   lineRefs.current[i] = el;
                 }}
-                className={`${styles.line} ${i === 3 ? styles.lineAccent : ""}`}
+                className={`${styles.line} ${i === HEADLINE_LINES.length - 1 ? styles.lineAccent : ""}`}
                 aria-hidden="true"
               >
                 {line}
@@ -75,24 +66,17 @@ export function Hero() {
         </h1>
 
         <p ref={sublineRef} className={styles.subline}>
-          DevClub takes you from your first line of code to a real, shipped
-          product — through four stages built to make you a working full
-          stack developer.
+          A <strong>maior escola de programação do Brasil</strong> para quem
+          quer sair do zero, construir projetos reais e transformar
+          conhecimento em uma nova carreira. Aqui você aprende Frontend,
+          Backend, Mobile, Data e Inteligência Artificial em um único
+          ecossistema — com comunidade, mentoria de carreira e o suporte
+          necessário para dar o próximo passo dentro da tecnologia.
         </p>
-
-        <div ref={metaRef} className={styles.meta}>
-          <ol className={`${styles.pipeline} mono`}>
-            <li className={styles.pipelineActive}>Learn</li>
-            <li>Build</li>
-            <li>Ship</li>
-            <li>Become</li>
-          </ol>
-          <span className={`${styles.pageIndex} mono`}>01 — 04</span>
-        </div>
       </div>
 
       <div ref={scrollCueRef} className={styles.scrollCue}>
-        <span className="mono">Scroll to enter</span>
+        <span className="mono">Role para começar</span>
         <span className={styles.scrollLine} aria-hidden="true" />
       </div>
     </section>

@@ -1,0 +1,267 @@
+.professors {
+  position: relative;
+  background: var(--void);
+  padding: clamp(5rem, 10vh, 7.5rem) 0;
+  overflow: hidden;
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.heading {
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto clamp(3rem, 6vh, 4.5rem);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.titleAccent {
+  color: var(--signal);
+}
+
+.subtitle {
+  margin-top: 1.1rem;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+/* ---- Showcase ---- */
+
+.showcaseWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.showcase {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 6vw, 4rem);
+}
+
+/* ---- Photo ---- */
+
+.photoFrame {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(200px, 22vw, 300px);
+  height: clamp(200px, 22vw, 300px);
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--line-strong);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 0 50px -10px var(--photo-accent, rgba(155, 44, 255, 0.45)),
+    0 0 90px -20px var(--photo-accent-secondary, rgba(94, 234, 212, 0.3));
+  background: var(--void-raised);
+}
+
+.photoInitials {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  color: #fff;
+  border: 1px solid var(--line-strong);
+  box-shadow:
+    0 0 50px -10px var(--photo-accent, rgba(155, 44, 255, 0.45)),
+    0 0 90px -20px var(--photo-accent-secondary, rgba(94, 234, 212, 0.3));
+}
+
+/* ---- Info ---- */
+
+.info {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.professorName {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.specialty {
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+.description {
+  font-size: clamp(0.92rem, 1.3vw, 1.02rem);
+  line-height: 1.6;
+  color: var(--ink-dim);
+  max-width: 32rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.tag {
+  font-size: 0.65rem;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-dim);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  white-space: nowrap;
+}
+
+/* ---- Nav arrows ---- */
+
+.navButton {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--void-raised);
+  border: 1px solid var(--line-strong);
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition:
+    border-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s var(--ease-premium);
+}
+
+.navButton:hover {
+  color: var(--ink);
+  border-color: var(--signal-dim);
+  box-shadow: 0 0 24px -6px var(--signal-dim);
+  transform: translateY(-2px);
+}
+
+.navButton:active {
+  transform: translateY(0);
+}
+
+.navIcon {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---- Bottom controls: indicator + dots ---- */
+
+.navControls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 5vh, 3.5rem);
+}
+
+.indicator {
+  font-size: var(--size-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--line-strong);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.35s ease, transform 0.35s ease;
+}
+
+.dot.active {
+  background: var(--signal);
+  transform: scale(1.3);
+}
+
+/* ---- Transition state (driven by inline GSAP, classes just set base state) ---- */
+
+.photoFrame,
+.info {
+  will-change: transform, opacity, filter;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 900px) {
+  .showcaseWrap {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .showcase {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.75rem;
+  }
+
+  .info {
+    align-items: center;
+  }
+
+  .description {
+    max-width: 26rem;
+  }
+
+  .navRow {
+    order: 3;
+    display: flex;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .photoFrame {
+    width: clamp(160px, 45vw, 220px);
+    height: clamp(160px, 45vw, 220px);
+  }
+}
