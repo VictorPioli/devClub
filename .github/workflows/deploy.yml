@@ -23,7 +23,12 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # npm ci demands the lock file match exactly, including optional
+      # platform-specific transitive deps (a WASM fallback pulled in by
+      # the toolchain resolves to different @emnapi versions on Windows
+      # vs Linux) — that mismatch broke every run generated from a
+      # Windows machine. npm install tolerates that drift.
+      - run: npm install
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
