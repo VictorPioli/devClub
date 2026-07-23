@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import type { JSX } from "react";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { runDifferentiatorsAnimations } from "../../animations/differentiatorsAnimations";
 import { Eyebrow } from "../../components/ui/Eyebrow";
@@ -128,7 +129,7 @@ const PILLARS: Pillar[] = [
 const STATS = [
   { value: "+10.000", label: "Alunos na comunidade" },
   { value: "+500", label: "Projetos compartilhados" },
-  { value: "+X", label: "Histórias de transição de carreira" },
+  { value: "+100", label: "Histórias de transição de carreira" },
 ];
 
 function accentClass(accent: Accent) {

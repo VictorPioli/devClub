@@ -154,3 +154,99 @@
     letter-spacing: 0.01em;
   }
 }
+
+/* ---------------------------------------------------------------
+   Anatomy overview — the permanent static state reached once the
+   built-once sequence has played all the way through. Hidden
+   (opacity 0, non-interactive) until the animation reveals it, or
+   shown immediately on repeat visits within the same session.
+----------------------------------------------------------------*/
+.overview {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.6rem, 1.4vw, 1.25rem);
+  padding: clamp(4.5rem, 8vh, 6rem) var(--gutter) 2rem;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.overviewItem {
+  flex: 1 1 0%;
+  min-width: 0;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
+  padding: clamp(0.6rem, 1vw, 0.9rem);
+  background: var(--void-raised);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  transition:
+    transform 0.4s var(--ease-premium),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.overviewItem:hover {
+  transform: translateY(-4px) scale(1.03);
+  border-color: var(--signal-dim);
+  box-shadow: 0 20px 50px -22px rgba(0, 0, 0, 0.6), 0 0 30px -10px var(--signal-dim);
+}
+
+.overviewFrameWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  padding: 0.35rem;
+  background: var(--void);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.35s ease;
+}
+
+.overviewItem:hover .overviewFrameWrap {
+  border-color: var(--signal-dim);
+}
+
+.overviewTitle {
+  font-size: clamp(0.62rem, 1vw, 0.75rem);
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-dim);
+  text-align: center;
+}
+
+.overviewItem:hover .overviewTitle {
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .overview {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+    overflow-y: auto;
+    padding: 4rem var(--gutter) 1.5rem;
+  }
+
+  .overviewItem {
+    flex: 1 1 calc(50% - 0.6rem);
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .overviewItem {
+    flex: 1 1 100%;
+  }
+
+  .overviewFrameWrap {
+    aspect-ratio: 16 / 9;
+  }
+}

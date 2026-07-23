@@ -1,4 +1,5 @@
 import { useLayoutEffect, useMemo, useRef } from "react";
+import type { ComponentType } from "react";
 import { Eyebrow } from "../../components/ui/Eyebrow";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { runFrontendAnimations, type DriftTarget } from "../../animations/frontendAnimations";
@@ -13,6 +14,7 @@ import {
   createDataSceneRefs,
   createMobileSceneRefs,
 } from "./scenes/sceneRefs";
+import { AIMini, BackendMini, DataMini, FrontendMini, MobileMini } from "./anatomy";
 import styles from "./Frontend.module.css";
 
 // A small, plain site mockup — nav, headline, subhead, button —
@@ -34,8 +36,24 @@ const DISSOLVE_ANCHORS = [
 
 const DUST_COUNT = 14;
 
+// The static "anatomy overview" shown once the built-once sequence has
+// played all the way through — five areas side by side, each rendering
+// a miniature of the scene that was actually built during its stage of
+// the animation (frontend mockup, backend rack, phone, table+db, neural
+// network), not a generic line icon.
+const ANATOMY_AREAS: ReadonlyArray<{ id: string; title: string; Mini: ComponentType }> = [
+  { id: "frontend", title: "FRONTEND", Mini: FrontendMini },
+  { id: "backend", title: "BACKEND", Mini: BackendMini },
+  { id: "mobile", title: "MOBILE", Mini: MobileMini },
+  { id: "data", title: "DATA", Mini: DataMini },
+  { id: "ai", title: "GESTÃO DE IA", Mini: AIMini },
+];
+
 export function Frontend() {
   const rootRef = useRef<HTMLElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<SVGSVGElement>(null);
+  const overviewRef = useRef<HTMLDivElement>(null);
 
   const eyebrowFrontendRef = useRef<HTMLDivElement>(null);
   const eyebrowBackendRef = useRef<HTMLDivElement>(null);
@@ -162,6 +180,9 @@ export function Frontend() {
         mobile: mobileRefs,
         data: dataRefs,
         ai: aiRefs,
+        copy: copyRef.current,
+        canvas: canvasRef.current,
+        overview: overviewRef.current,
       },
       dissolveParticles.map((p) => p.drift),
       reducedMotion
@@ -176,7 +197,7 @@ export function Frontend() {
       <div className={styles.stage}>
         <div ref={flashRef} className={styles.flash} aria-hidden="true" />
 
-        <div className={styles.copy}>
+        <div ref={copyRef} className={styles.copy}>
           <div className={styles.eyebrowStack}>
             <div ref={eyebrowFrontendRef} className={styles.eyebrowLayer}>
               <Eyebrow index="01 / 05" label="THE INTERFACE" />
@@ -217,6 +238,7 @@ export function Frontend() {
         </div>
 
         <svg
+          ref={canvasRef}
           className={styles.canvas}
           viewBox="0 0 900 560"
           role="img"
@@ -304,6 +326,20 @@ export function Frontend() {
           <DataScene refs={dataRefs} />
           <AIScene refs={aiRefs} />
         </svg>
+
+        {/* The permanent, static state reached after the built-once
+            sequence completes (or immediately, on repeat visits this
+            session) — five areas side by side, no longer animating. */}
+        <div ref={overviewRef} className={styles.overview} aria-hidden="true">
+          {ANATOMY_AREAS.map(({ id, title, Mini }) => (
+            <div key={id} data-anatomy-item className={styles.overviewItem}>
+              <span className={styles.overviewFrameWrap}>
+                <Mini />
+              </span>
+              <span className={`${styles.overviewTitle} mono`}>{title}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

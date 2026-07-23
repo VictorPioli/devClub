@@ -55,6 +55,14 @@ export interface FrontendRefs {
   mobile: MobileSceneRefs;
   data: DataSceneRefs;
   ai: AISceneRefs;
+  /** The `.copy` text wrapper — faded out together as one unit once the
+   *  built-once anatomy overview takes over. */
+  copy: HTMLElement | null;
+  /** The `<svg>` canvas holding the whole animated mockup + scenes. */
+  canvas: SVGSVGElement | null;
+  /** The static "five areas side by side" overview shown after the first
+   *  full playthrough — hidden until then. */
+  overview: HTMLElement | null;
 }
 
 /** Every stage builder appends to the one shared, scrubbed timeline. */

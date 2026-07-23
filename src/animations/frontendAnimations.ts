@@ -20,6 +20,28 @@ export interface DriftTarget {
 
 const EASE = "expo.out" as const;
 
+// Play-once gate: the built sequence should only ever run once per browser
+// tab session. `sessionStorage` (not localStorage) is exactly the "current
+// session, not permanent" scope the product ask calls for.
+const ANATOMY_SEEN_KEY = "devclub:frontend-anatomy-seen";
+
+function hasSeenAnatomy(): boolean {
+  try {
+    return sessionStorage.getItem(ANATOMY_SEEN_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markAnatomySeen(): void {
+  try {
+    sessionStorage.setItem(ANATOMY_SEEN_KEY, "1");
+  } catch {
+    // Storage unavailable (private mode, etc.) — the in-memory guard
+    // inside runFrontendAnimations still prevents replay for this mount.
+  }
+}
+
 /**
  * One continuous, fully reversible scroll sequence, pinned once.
  *
@@ -96,18 +118,114 @@ export function runFrontendAnimations(
       return;
     }
 
+    // The built sequence already played once this tab session — skip the
+    // pin/scrub entirely (no forced multi-viewport scroll for nothing) and
+    // land directly on the permanent "five areas side by side" overview.
+    if (hasSeenAnatomy()) {
+      gsap.set([refs.copy, refs.canvas], { opacity: 0, pointerEvents: "none" });
+      gsap.set(refs.overview, { opacity: 1, pointerEvents: "auto" });
+      if (refs.overview) {
+        gsap.set(refs.overview.querySelectorAll("[data-anatomy-item]"), {
+          opacity: 1,
+          y: 0,
+        });
+      }
+      return;
+    }
+
+    // Guards the shared timeline against being scrubbed backward-then-
+    // forward again once the first full playthrough has finished, without
+    // touching the ScrollTrigger's pin/scroll distance (killing the pin
+    // mid-document would shift every section below it).
+    let completed = false;
+
     const tl = gsap.timeline({
       defaults: { ease: EASE },
       scrollTrigger: {
         trigger: refs.root,
         start: "top top",
-        end: () => `+=${window.innerHeight * 7.0}`,
+        end: () => `+=${window.innerHeight * 8.9}`,
         scrub: 0.7,
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
-        onLeaveBack: () => idleTweens.forEach((tw) => tw.pause()),
-        onEnterBack: () => idleTweens.forEach((tw) => tw.resume()),
+        onLeaveBack: () => {
+          if (!completed) idleTweens.forEach((tw) => tw.pause());
+        },
+        onEnterBack: () => {
+          if (!completed) idleTweens.forEach((tw) => tw.resume());
+        },
+        onUpdate: (self) => {
+          if (completed) {
+            // Frozen on the finished, crossfaded state — ignore whatever
+            // scroll position produced this update.
+            if (tl.progress() !== 1) tl.progress(1);
+            return;
+          }
+          if (self.progress >= 1) {
+            completed = true;
+            markAnatomySeen();
+            idleTweens.forEach((tw) => tw.pause());
+            // The 0.7s scrub smoothing is still easing toward tl=1; the
+            // frozen guard above engages on the next update onward.
+            //
+            // Release the pin. Without this, the ~9-viewport pin
+            // distance traps the user at scrollY = sectionStart + 9vh
+            // and they have to reverse-scroll ~9 screens before they
+            // can leave the section. GSAP's `kill()` stops the trigger
+            // but does NOT collapse the pin spacer, so we tear the
+            // spacer + inline styles down by hand and snap scroll to
+            // the section's original start so the overview stays
+            // anchored where the user was looking.
+            const rootEl = refs.root as HTMLElement | null;
+            // setTimeout, not requestAnimationFrame — rAF is heavily
+            // throttled (often to 0Hz) when the tab isn't visible, and
+            // a user who switches tabs mid-scroll would otherwise stay
+            // trapped in the pin range until they return.
+            setTimeout(() => {
+              self.kill(false);
+              if (rootEl) {
+                const parent = rootEl.parentElement;
+                if (parent && parent.classList.contains("pin-spacer")) {
+                  // Unwrap: move the section back to where the spacer
+                  // sits, then discard the spacer entirely. GSAP's
+                  // `kill()` stops the trigger but doesn't do this.
+                  parent.replaceWith(rootEl);
+                }
+                rootEl.style.cssText = "";
+              }
+              // Move the user's viewport before touching ScrollTrigger.
+              // ScrollTrigger.refresh() snapshots the current scroll
+              // and restores it asynchronously afterwards, so a
+              // scrollTo issued *after* refresh gets clobbered — the
+              // section then sits below the viewport and the user has
+              // to hunt for the overview. Do it in this order:
+              //
+              //   1. Read the section's new document top after the
+              //      unwrap (the layout has already shrunk).
+              //   2. Push both Lenis' internal target and the browser
+              //      scroll to that position; either alone drifts.
+              //   3. Refresh the remaining ScrollTriggers with our
+              //      new scroll baked in, so the snapshot they save
+              //      matches where we want to be.
+              const lenis = (window as unknown as {
+                __lenis?: {
+                  setScroll: (t: number) => void;
+                  scrollTo: (t: number, o?: { immediate?: boolean; force?: boolean }) => void;
+                };
+              }).__lenis;
+              if (rootEl) {
+                const newTop = rootEl.getBoundingClientRect().top + window.scrollY;
+                if (lenis) {
+                  lenis.scrollTo(newTop, { immediate: true, force: true });
+                  lenis.setScroll(newTop);
+                }
+                window.scrollTo(0, newTop);
+              }
+              ScrollTrigger.refresh();
+            }, 0);
+          }
+        },
       },
     });
 
@@ -202,7 +320,33 @@ export function runFrontendAnimations(
     buildBackendStage(tl, refs);
     buildMobileStage(tl, refs);
     buildDataStage(tl, refs);
-    buildAIStage(tl, refs);
+    buildAIStage(tl, refs); // ends on a held, still frame at t≈4.57
+
+    // === THE ANATOMY, ASSEMBLED: settle into the permanent overview =====
+    // The finished model has had its moment (buildAIStage's own closing
+    // hold); now the whole built composition steps back and the five
+    // areas reorganize side by side — this is the true end of the
+    // built-once sequence, not a separate afterthought.
+    const overviewItems = refs.overview
+      ? Array.from(refs.overview.querySelectorAll("[data-anatomy-item]"))
+      : [];
+    const settleTargets = [refs.copy, refs.canvas].filter(
+      (el): el is HTMLElement | SVGSVGElement => el !== null
+    );
+
+    tl.to(
+      settleTargets,
+      { opacity: 0, scale: 0.94, duration: 0.4, ease: "power2.inOut" },
+      4.65
+    )
+      .set(refs.overview, { pointerEvents: "auto" }, 4.95)
+      .fromTo(refs.overview, { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.95)
+      .fromTo(
+        overviewItems,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.45, stagger: 0.08 },
+        5.05
+      );
 
     // === Ambient life, independent of scroll ===========================
 

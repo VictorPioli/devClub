@@ -7,6 +7,7 @@ interface HeroAnimationRefs {
   root: HTMLElement;
   lines: HTMLElement[];
   subline: HTMLElement | null;
+  logoStage: HTMLElement | null;
   scrollCue: HTMLElement | null;
   canvasWrapper: HTMLElement | null;
 }
@@ -19,7 +20,7 @@ interface HeroAnimationRefs {
 export function runHeroAnimations(refs: HeroAnimationRefs, reduced: boolean) {
   const ctx = gsap.context(() => {
     if (reduced) {
-      gsap.set([refs.subline, refs.scrollCue], {
+      gsap.set([refs.subline, refs.logoStage, refs.scrollCue], {
         opacity: 1,
         y: 0,
       });
@@ -57,7 +58,7 @@ export function runHeroAnimations(refs: HeroAnimationRefs, reduced: boolean) {
       scrub: 0.6,
       onUpdate: (self) => {
         const progress = self.progress;
-        gsap.set([refs.lines, refs.subline], {
+        gsap.set([refs.lines, refs.subline, refs.logoStage], {
           opacity: 1 - progress * 1.4,
           y: -progress * 60,
         });

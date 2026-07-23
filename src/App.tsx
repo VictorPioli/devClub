@@ -2,6 +2,7 @@ import { useLenis } from "./hooks/useLenis";
 import { Nav } from "./components/navigation/Nav";
 import { GridOverlay } from "./components/ui/GridOverlay";
 import { Hero } from "./sections/Hero/Hero";
+import { Transition } from "./sections/Transition/Transition";
 import { Frontend } from "./sections/Frontend/Frontend";
 import { Paths } from "./sections/Paths/Paths";
 import { Differentiators } from "./sections/Differentiators/Differentiators";
@@ -17,6 +18,10 @@ function App() {
       <Nav />
       <main>
         <Hero />
+        {/* An editorial chapter break — no pin, no scrub — that
+            introduces the pinned sequence below without previewing
+            its content. */}
+        <Transition />
         {/* One continuous, reversible scroll sequence, pinned once:
             builds the interface (FRONTEND), dissolves through it into
             the system behind it (BACKEND), then that same system

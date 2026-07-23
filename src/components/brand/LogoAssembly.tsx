@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { LOGO_FRAGMENTS } from "./logoFragments";
 
@@ -56,6 +56,23 @@ export function LogoAssembly({ reduced }: LogoAssemblyProps) {
     [fragments]
   );
 
+  // Once every fragment has landed and the frame has faded in, the mark
+  // settles into a slow, quiet breathing glow — proof it's alive, not
+  // a second act of the build. Held off until the cascade actually
+  // finishes so it never overlaps the entrance.
+  const [assembled, setAssembled] = useState(false);
+  useEffect(() => {
+    if (reduced) return;
+    const settleAt = (cascadeEnd - 0.5 + 0.9) * 1000;
+    const timer = setTimeout(() => setAssembled(true), settleAt);
+    return () => clearTimeout(timer);
+  }, [reduced, cascadeEnd]);
+
+  // Reduced motion wins outright: no entrance animation and no idle
+  // loop, regardless of whether the settle timer would otherwise have
+  // fired by now.
+  const breathing = assembled && !reduced;
+
   return (
     <svg
       viewBox="0 0 1254 597"
@@ -98,8 +115,12 @@ export function LogoAssembly({ reduced }: LogoAssemblyProps) {
         <motion.g
           filter="url(#purpleGlow)"
           initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 0.85 }}
-          transition={{ duration: 0.9, ease: EASE_FLUID, delay: reduced ? 0 : cascadeEnd - 0.5 }}
+          animate={breathing ? { opacity: [0.85, 1, 0.85] } : { opacity: 0.85 }}
+          transition={
+            breathing
+              ? { duration: 3.4, repeat: Infinity, ease: "easeInOut" }
+              : { duration: 0.9, ease: EASE_FLUID, delay: reduced ? 0 : cascadeEnd - 0.5 }
+          }
         >
           <rect
             x={FRAME.x}

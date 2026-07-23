@@ -11,30 +11,19 @@
   );
 }
 
+/* The particle field (1800 points on full tier) runs edge-to-edge by
+   default, so it would otherwise stop dead at Hero's own bottom border
+   — a hard density cliff against Transition's much sparser dots right
+   below it. Fading the whole canvas out over its last quarter turns
+   that cliff into a taper, so the two sections' backgrounds read as
+   one continuous black rather than two visibly different boxes. */
 .canvasWrapper {
   position: absolute;
   inset: 0;
   z-index: var(--z-scene);
   transform-origin: 60% 40%;
-}
-
-.logoStage {
-  position: absolute;
-  top: 50%;
-  right: 4%;
-  width: min(62vw, 860px);
-  aspect-ratio: 1254 / 597;
-  transform: translateY(-50%);
-}
-
-@media (max-width: 960px) {
-  .logoStage {
-    right: 50%;
-    top: 42%;
-    width: min(92vw, 560px);
-    transform: translate(50%, -50%);
-    opacity: 0.5;
-  }
+  mask-image: linear-gradient(to bottom, black 0%, black 72%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 72%, transparent 100%);
 }
 
 .content {
@@ -44,6 +33,10 @@
   max-width: var(--container-max);
   margin: 0 auto;
   padding: clamp(7rem, 14vh, 9rem) var(--gutter) 6.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .headline {
@@ -66,8 +59,20 @@
   will-change: transform;
 }
 
+/* The same neon green the assembled mark is built from — see
+   neonGreen's first stop in LogoAssembly.tsx — so the headline's
+   accent line and the logo read as one identity, not two accent
+   systems. No text-shadow here: .lineMask needs overflow:hidden for
+   the slide-up reveal, which clips any glow into a visible hard-edged
+   rectangle around the line — the fix is the flat color alone. */
 .lineAccent {
-  color: var(--signal);
+  color: #55ff36;
+}
+
+/* "DEV" picks up the logo's purple frame color, splitting the line
+   the same way the assembled mark itself is two-tone. */
+.lineAccentDev {
+  color: #9b2cff;
 }
 
 .subline {
@@ -81,6 +86,22 @@
 .subline strong {
   color: var(--ink);
   font-weight: 600;
+}
+
+/* The logo now assembles in normal flow, centered below the title and
+   description — the visual payoff after the copy, not a decorative
+   overlay running alongside it. */
+.logoStage {
+  position: relative;
+  width: min(46vw, 620px);
+  aspect-ratio: 1254 / 597;
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+}
+
+@media (max-width: 720px) {
+  .logoStage {
+    width: min(84vw, 460px);
+  }
 }
 
 .scrollCue {

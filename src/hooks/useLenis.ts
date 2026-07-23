@@ -32,9 +32,16 @@ export function useLenis(enabled: boolean = true) {
     });
     gsap.ticker.lagSmoothing(0);
 
+    // The active instance is exposed on window so the pinned frontend
+    // sequence can reset Lenis' internal target when it collapses its
+    // ScrollTrigger; otherwise Lenis' next tick snaps the user back to
+    // wherever it thinks scroll should be, undoing our jump.
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
     return () => {
       lenis.destroy();
       gsap.ticker.remove(lenis.raf);
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
   }, [enabled]);
 }
