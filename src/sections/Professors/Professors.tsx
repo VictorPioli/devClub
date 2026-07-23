@@ -14,11 +14,17 @@ interface Professor {
   tags: string[];
 }
 
+// Vite serves everything under public/ relative to BASE_URL, not the
+// domain root — on GitHub Pages that's /devClub/, not /. A hardcoded
+// leading-slash path bypasses that and 404s once the site isn't
+// hosted at the root.
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+
 const PROFESSORS: Professor[] = [
   {
     id: "rodolfo",
     name: "Rodolfo Mori",
-    image: "/professors/rodolfo-mori.jpg",
+    image: asset("professors/rodolfo-mori.jpg"),
     specialty: "Desenvolvimento Full Stack e Arquitetura de Software",
     description:
       "Especialista em transformar fundamentos de programação em aplicações reais, conectando frontend, backend e arquitetura de sistemas.",
@@ -27,7 +33,7 @@ const PROFESSORS: Professor[] = [
   {
     id: "andrei",
     name: "Andrei Maia",
-    image: "/professors/andrey-maia.png",
+    image: asset("professors/andrey-maia.png"),
     specialty: "Engenharia de Software e Desenvolvimento Backend",
     description:
       "Focado na construção de sistemas robustos, APIs escaláveis e na aplicação de boas práticas para transformar código em produtos confiáveis.",
@@ -36,7 +42,7 @@ const PROFESSORS: Professor[] = [
   {
     id: "victor",
     name: "Victor Soares",
-    image: "/professors/victor-soares.jpg",
+    image: asset("professors/victor-soares.jpg"),
     specialty: "Frontend, Interfaces e Experiência do Usuário",
     description:
       "Especialista em transformar ideias em interfaces modernas, funcionais e experiências digitais que conectam tecnologia e pessoas.",
@@ -45,7 +51,7 @@ const PROFESSORS: Professor[] = [
   {
     id: "deyvid",
     name: "Deyvid Nascimento",
-    image: "/professors/deyvid-nascimento.jpg",
+    image: asset("professors/deyvid-nascimento.jpg"),
     specialty: "Inteligência Artificial e Desenvolvimento de Produtos",
     description:
       "Focado na aplicação prática de Inteligência Artificial para acelerar o desenvolvimento e criar novas possibilidades com tecnologia.",
