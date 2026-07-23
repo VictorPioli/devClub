@@ -154,7 +154,7 @@ export function Testimonials() {
     <section ref={rootRef} id="testimonials" className={styles.testimonials}>
       <div className={styles.inner}>
         <div ref={headingRef} className={styles.heading}>
-          <Eyebrow index="06" label="TRANSFORMAÇÕES" />
+          <Eyebrow label="TRANSFORMAÇÕES" />
           <h2 className={styles.title}>
             ELES TAMBÉM COMEÇARAM{" "}
             <span className={styles.titleAccent}>DO ZERO</span>.

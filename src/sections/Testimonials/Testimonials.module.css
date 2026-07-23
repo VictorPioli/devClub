@@ -27,7 +27,7 @@
 }
 
 .titleAccent {
-  color: var(--signal);
+  color: #55ff36;
 }
 
 .subtitle {
@@ -151,8 +151,8 @@
 }
 
 .tagAfter {
-  color: var(--signal);
-  border: 1px solid var(--signal-dim);
+  color: #55ff36;
+  border: 1px solid rgba(85, 255, 54, 0.35);
 }
 
 .arrow {
@@ -196,8 +196,8 @@
 }
 
 .badgeRemote {
-  color: var(--signal);
-  border-color: var(--signal-dim);
+  color: #55ff36;
+  border-color: rgba(85, 255, 54, 0.35);
 }
 
 /* ---- Metrics ---- */

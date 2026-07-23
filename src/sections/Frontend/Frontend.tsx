@@ -200,19 +200,19 @@ export function Frontend() {
         <div ref={copyRef} className={styles.copy}>
           <div className={styles.eyebrowStack}>
             <div ref={eyebrowFrontendRef} className={styles.eyebrowLayer}>
-              <Eyebrow index="01 / 05" label="THE INTERFACE" />
+              <Eyebrow label="THE INTERFACE" />
             </div>
             <div ref={eyebrowBackendRef} className={styles.eyebrowLayer}>
-              <Eyebrow index="02 / 05" label="THE ENGINE" />
+              <Eyebrow label="THE ENGINE" />
             </div>
             <div ref={eyebrowMobileRef} className={styles.eyebrowLayer}>
-              <Eyebrow index="03 / 05" label="THE DEVICE" />
+              <Eyebrow label="THE DEVICE" />
             </div>
             <div ref={eyebrowDataRef} className={styles.eyebrowLayer}>
-              <Eyebrow index="04 / 05" label="THE DATA" />
+              <Eyebrow label="THE DATA" />
             </div>
             <div ref={eyebrowAIRef} className={styles.eyebrowLayer}>
-              <Eyebrow index="05 / 05" label="THE INTELLIGENCE" />
+              <Eyebrow label="THE INTELLIGENCE" />
             </div>
           </div>
 

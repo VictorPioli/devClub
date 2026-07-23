@@ -28,7 +28,7 @@
 }
 
 .titleAccent {
-  color: var(--signal);
+  color: #55ff36;
 }
 
 .subtitle {
@@ -120,7 +120,7 @@
   font-size: 0.7rem;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--signal);
+  color: #55ff36;
 }
 
 .description {

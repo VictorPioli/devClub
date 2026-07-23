@@ -168,7 +168,7 @@ export function Differentiators() {
     <section ref={rootRef} id="differentiators" className={styles.differentiators}>
       <div className={styles.inner}>
         <div ref={headerRef} className={styles.header}>
-          <Eyebrow index="05" label="O ECOSSISTEMA" />
+          <Eyebrow label="O ECOSSISTEMA" />
           <h2 className={styles.title}>
             O QUE TORNA
             <br />O DEVCLUB <span className={styles.titleAccent}>DIFERENTE</span>?

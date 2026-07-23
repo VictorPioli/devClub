@@ -178,7 +178,7 @@ export function Professors() {
     <section ref={rootRef} id="professors" className={styles.professors}>
       <div className={styles.inner}>
         <div ref={headingRef} className={styles.heading}>
-          <Eyebrow index="05" label="INSTRUTORES" />
+          <Eyebrow label="INSTRUTORES" />
           <h2 className={styles.title}>
             APRENDA COM QUEM <span className={styles.titleAccent}>CONSTRÓI</span>.
           </h2>

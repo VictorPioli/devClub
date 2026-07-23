@@ -30,7 +30,7 @@
 }
 
 .titleAccent {
-  color: var(--signal);
+  color: #55ff36;
 }
 
 .intro {
@@ -93,9 +93,9 @@
   display: inline-block;
   font-size: var(--size-xs);
   letter-spacing: var(--tracking-wider);
-  color: var(--signal);
+  color: #55ff36;
   padding: 0.35rem 0.85rem;
-  border: 1px solid var(--signal-dim);
+  border: 1px solid rgba(85, 255, 54, 0.35);
   border-radius: 999px;
 }
 
@@ -110,7 +110,7 @@
 }
 
 .ecosystemTitleAccent {
-  color: var(--signal);
+  color: #55ff36;
 }
 
 .ecosystemLayout {
@@ -357,7 +357,7 @@
 }
 
 .ecosystemFlowArrow {
-  color: var(--signal);
+  color: #55ff36;
   font-size: 0.9rem;
   opacity: 0.7;
 }
